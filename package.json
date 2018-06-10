@@ -6,7 +6,6 @@
   "author": "maksimyurkov <yurkov.maksim.sergeevich@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@polymer/iron-icon": "^3.0.0-pre.17",
     "@polymer/iron-iconset-svg": "^3.0.0-pre.17",
     "@polymer/lit-element": "^0.5.1",
     "@polymer/paper-button": "^3.0.0-pre.17",
