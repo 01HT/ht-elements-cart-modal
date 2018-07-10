@@ -1,10 +1,10 @@
 {
-  "name": "ht-elements-cart-modal",
+  "name": "@01ht/ht-elements-cart-modal",
   "version": "1.0.0",
   "main": "ht-elements-cart-modal.js",
-  "repository": "https://github.com/maksimyurkov/ht-elements-cart-modal",
-  "author": "maksimyurkov <yurkov.maksim.sergeevich@gmail.com>",
-  "license": "MIT",
+  "repository": "01ht/ht-elements-cart-modal",
+  "author": "01ht Ltd",
+  "license": "UNLICENSED",
   "dependencies": {
     "@polymer/iron-iconset-svg": "^3.0.0-pre.17",
     "@polymer/lit-element": "^0.5.1",
