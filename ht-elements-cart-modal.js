@@ -95,31 +95,31 @@ class HTElementsCartModal extends mixinBehaviors(
           color: var(--primary-text-color);
         }
     </style>
-     <iron-iconset-svg size="24" name="ht-elements-cart-modal-icons">
-    <svg>
-      <defs>
-        <g id="close">
-          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
-        </g>
-      </defs>
-    </svg>
+    <iron-iconset-svg size="24" name="ht-elements-cart-modal-icons">
+      <svg>
+        <defs>
+          <g id="close">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+          </g>
+        </defs>
+      </svg>
     </iron-iconset-svg>
     <div class="layout-horizontal">
       <div class="label">Добавлено в корзину</div>
     </div>
     <div class="layout-horizontal">
-      <a href="/cart" on-click="close" id="viewCartAnchor">
+      <a href="/cart" @click="close" id="viewCartAnchor">
         <paper-button raised class="modal-button">
           Корзина
         </paper-button>
       </a>
-      <a href="/checkout" on-click="close">
+      <a href="/checkout" @click="close">
         <paper-button raised class="modal-button">
           Оплата
         </paper-button>
       </a>
     </div>
-    <paper-icon-button icon="ht-elements-cart-modal-icons:close" id="closeBtn" aria-label="Закрыть окно" on-click="close">
+    <paper-icon-button icon="ht-elements-cart-modal-icons:close" id="closeBtn" aria-label="Закрыть окно" @click="close">
       </paper-icon-button>
 `;
   }
@@ -130,15 +130,16 @@ class HTElementsCartModal extends mixinBehaviors(
 
   static get properties() {
     return {
-      withBackdrop: {
-        type: Boolean,
-        value: true
-      }
+      withBackdrop: { type: Boolean }
     };
   }
 
-  ready() {
-    super.ready();
+  constructor() {
+    super();
+    this.withBackdrop = true;
+  }
+
+  firstUpdated() {
     this.setAttribute("role", "dialog");
     this.setAttribute("aria-modal", "true");
     this.addEventListener("transitionend", e => this._transitionEnd(e));
