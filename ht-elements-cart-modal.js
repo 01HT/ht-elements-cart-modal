@@ -1,5 +1,5 @@
 "use strict";
-import { PolymerElement, html } from "@polymer/polymer/polymer-element.js";
+import { LitElement, html } from "@polymer/lit-element";
 import "@polymer/paper-icon-button";
 import "@polymer/paper-button";
 import "@polymer/iron-iconset-svg";
@@ -8,9 +8,9 @@ import { mixinBehaviors } from "@polymer/polymer/lib/legacy/class.js";
 
 class HTElementsCartModal extends mixinBehaviors(
   [IronOverlayBehaviorImpl],
-  PolymerElement
+  LitElement
 ) {
-  static get template() {
+  render() {
     return html`
     <style>
         :host {
@@ -108,18 +108,24 @@ class HTElementsCartModal extends mixinBehaviors(
       <div class="label">Добавлено в корзину</div>
     </div>
     <div class="layout-horizontal">
-      <a href="/cart" @click="close" id="viewCartAnchor">
+      <a href="/cart" @click=${e => {
+        this.close();
+      }} id="viewCartAnchor">
         <paper-button raised class="modal-button">
           Корзина
         </paper-button>
       </a>
-      <a href="/checkout" @click="close">
+      <a href="/checkout" @click=${e => {
+        this.close();
+      }}>
         <paper-button raised class="modal-button">
           Оплата
         </paper-button>
       </a>
     </div>
-    <paper-icon-button icon="ht-elements-cart-modal-icons:close" id="closeBtn" aria-label="Закрыть окно" @click="close">
+    <paper-icon-button icon="ht-elements-cart-modal-icons:close" id="closeBtn" aria-label="Закрыть окно" @click=${e => {
+      this.close();
+    }}>
       </paper-icon-button>
 `;
   }
@@ -130,7 +136,8 @@ class HTElementsCartModal extends mixinBehaviors(
 
   static get properties() {
     return {
-      withBackdrop: { type: Boolean }
+      withBackdrop: { type: Boolean },
+      opened: { type: Boolean }
     };
   }
 
