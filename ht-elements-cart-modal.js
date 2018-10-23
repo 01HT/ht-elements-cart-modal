@@ -12,88 +12,88 @@ class HTElementsCartModal extends mixinBehaviors(
 ) {
   render() {
     return html`
+    ${SharedStyles}
     <style>
-        :host {
-            display: block;
-            position: fixed;
-            background-color: #FFF;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            width: 320px;
-            padding: 12px;
-            visibility: hidden;
-            will-change: transform;
-            top: 56px;
-            right: 16px;
-            -webkit-transform: translate3d(calc(100% + 16px), 0, 0);
-            transform: translate3d(calc(100% + 16px), 0, 0);
-            transition-property: visibility, -webkit-transform;
-            transition-property: visibility, transform;
-            transition-duration: 0.2s;
-            transition-delay: 0.1s;
-        }
-        
-        :host(.opened) {
-            visibility: visible;
-            -webkit-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
-        }
-        
-        .layout-horizontal {
-            display: flex;
-            flex-direction: row;
-        }
-        
-        .label {
-            display: flex;
-            line-height: 24px;
-            margin: 8px;
-        }
-        
-        .modal-button {
-            display: flex;
-            margin: 16px 8px;
-        }
-        
-        .modal-button > a {
-            box-sizing: border-box;
-            width: 100%;
-            padding: 8px 24px;
-        }
-        
-        #closeBtn {
-            position: absolute;
-            right: 5px;
-            top: 5px;
-        }
-        
-        @media (max-width: 767px) {
-            :host {
-                top: auto;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                width: auto;
-                -webkit-transform: translate3d(0, 100%, 0);
-                transform: translate3d(0, 100%, 0);
-            }
-        }
-        
-        paper-button {
-            background: var(--accent-color);
-            color:#fff;
-        }
-        
-        a {
-            text-transform: none;
-            outline: 0;
-            text-decoration: none;
-            color: inherit;
-            width: 50%;
-        }
+      :host {
+        display: block;
+        position: fixed;
+        background-color: #FFF;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        width: 320px;
+        padding: 12px;
+        visibility: hidden;
+        will-change: transform;
+        top: 56px;
+        right: 16px;
+        -webkit-transform: translate3d(calc(100% + 16px), 0, 0);
+        transform: translate3d(calc(100% + 16px), 0, 0);
+        transition-property: visibility, -webkit-transform;
+        transition-property: visibility, transform;
+        transition-duration: 0.2s;
+        transition-delay: 0.1s;
+      }
+      
+      :host(.opened) {
+        visibility: visible;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+      
+      .layout-horizontal {
+        display: flex;
+        flex-direction: row;
+      }
 
-        paper-icon-button {
-          color: var(--primary-text-color);
+      .actions {
+        padding: 16px 4px 4px 4px;
+        justify-content: space-between;
+      }
+      
+      .label {
+        display: flex;
+        line-height: 24px;
+        margin: 8px;
+      }
+      
+      .modal-button {
+          display: flex;
+      }
+      
+      .modal-button > a {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 8px 24px;
+      }
+      
+      #closeBtn {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+      }
+      
+      @media (max-width: 767px) {
+        :host {
+          top: auto;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          width: auto;
+          -webkit-transform: translate3d(0, 100%, 0);
+          transform: translate3d(0, 100%, 0);
         }
+      }
+      
+      a {
+        text-transform: none;
+        outline: 0;
+        text-decoration: none;
+        color: inherit;
+        width: calc(50% - 8px);
+      }
+
+      paper-icon-button {
+        color: var(--primary-text-color);
+      }
     </style>
     <iron-iconset-svg size="24" name="ht-elements-cart-modal-icons">
       <svg>
@@ -107,7 +107,7 @@ class HTElementsCartModal extends mixinBehaviors(
     <div class="layout-horizontal">
       <div class="label">Добавлено в корзину</div>
     </div>
-    <div class="layout-horizontal">
+    <div class="layout-horizontal actions">
       <a href="/cart" @click=${e => {
         this.close();
       }} id="viewCartAnchor">
