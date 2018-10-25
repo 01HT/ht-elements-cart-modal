@@ -45,7 +45,7 @@ class HTElementsCartModal extends mixinBehaviors(
       }
 
       .actions {
-        padding: 16px 4px 4px 4px;
+        padding: 12px 8px;
         justify-content: space-between;
       }
       
@@ -156,10 +156,7 @@ class HTElementsCartModal extends mixinBehaviors(
       // travelling (i.e. state.modal is already false).
       // This check is generally needed whenever you have both UI updating
       // state and state updating the same UI.
-      if (!this.opened) {
-        // store.dispatch(closeModal());
-        this.close();
-      }
+      if (!this.opened) this.dispatchClose();
     });
   }
 
@@ -193,10 +190,13 @@ class HTElementsCartModal extends mixinBehaviors(
   }
 
   get _focusableNodes() {
-    return [this.$.viewCartAnchor, this.$.closeBtn];
+    return [
+      this.shadowRoot.querySelector("#viewCartAnchor"),
+      this.shadowRoot.querySelector("#closeBtn")
+    ];
   }
 
-  close() {
+  dispatchClose() {
     this.dispatchEvent(
       new CustomEvent("on-close-cart-modal", { bubbles: true, composed: true })
     );
