@@ -11,6 +11,7 @@ class HTElementsCartModal extends mixinBehaviors(
   LitElement
 ) {
   render() {
+    const { signedIn } = this;
     return html`
     ${SharedStyles}
     <style>
@@ -56,7 +57,7 @@ class HTElementsCartModal extends mixinBehaviors(
       }
       
       .modal-button {
-          display: flex;
+        display: flex;
       }
       
       .modal-button > a {
@@ -69,6 +70,12 @@ class HTElementsCartModal extends mixinBehaviors(
         position: absolute;
         right: 5px;
         top: 5px;
+      }
+
+      paper-button[disabled] {
+        background: #ccc;
+        color: #fff;
+        text-transform: uppercase;
       }
       
       @media (max-width: 767px) {
@@ -83,7 +90,7 @@ class HTElementsCartModal extends mixinBehaviors(
         }
       }
       
-      a {
+      .actions > * {
         text-transform: none;
         outline: 0;
         text-decoration: none;
@@ -115,13 +122,15 @@ class HTElementsCartModal extends mixinBehaviors(
           Корзина
         </paper-button>
       </a>
-      <a href="/checkout" @click=${e => {
-        this.close();
-      }}>
-        <paper-button raised class="modal-button">
-          Оплата
-        </paper-button>
-      </a>
+        ${
+          signedIn
+            ? html`<a href="/my-orders">
+        <paper-button raised class="modal-button" @click=${_ => {
+          this._checkOut();
+        }}>Оплата</paper-button>
+        </a>`
+            : html`<paper-button raised disabled class="modal-button">Оплата</paper-button>`
+        }
     </div>
     <paper-icon-button icon="ht-elements-cart-modal-icons:close" id="closeBtn" aria-label="Закрыть окно" @click=${e => {
       this.close();
@@ -137,7 +146,8 @@ class HTElementsCartModal extends mixinBehaviors(
   static get properties() {
     return {
       withBackdrop: { type: Boolean },
-      opened: { type: Boolean }
+      opened: { type: Boolean },
+      signedIn: { type: Boolean }
     };
   }
 
@@ -161,6 +171,7 @@ class HTElementsCartModal extends mixinBehaviors(
   }
 
   _renderOpened() {
+    this.requestUpdate();
     this.restoreFocusOnClose = true;
     this.backdropElement.style.display = "none";
     this.classList.add("opened");
@@ -205,6 +216,16 @@ class HTElementsCartModal extends mixinBehaviors(
   refit() {}
 
   notifyResize() {}
+
+  _checkOut() {
+    this.dispatchEvent(
+      new CustomEvent("create-order", {
+        bubbles: true,
+        composed: true
+      })
+    );
+    this.close();
+  }
 }
 
 customElements.define("ht-elements-cart-modal", HTElementsCartModal);
