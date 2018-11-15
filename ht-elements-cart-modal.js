@@ -5,13 +5,14 @@ import "@polymer/paper-button";
 import "@polymer/iron-iconset-svg";
 import { IronOverlayBehaviorImpl } from "@polymer/iron-overlay-behavior/iron-overlay-behavior.js";
 import { mixinBehaviors } from "@polymer/polymer/lib/legacy/class.js";
+import "@01ht/ht-spinner";
 
 class HTElementsCartModal extends mixinBehaviors(
   [IronOverlayBehaviorImpl],
   LitElement
 ) {
   render() {
-    const { signedIn } = this;
+    const { signedIn, orderCreating } = this;
     return html`
     ${SharedStyles}
     <style>
@@ -77,6 +78,13 @@ class HTElementsCartModal extends mixinBehaviors(
         color: #fff;
         text-transform: uppercase;
       }
+
+      ht-spinner {
+        display:flex;
+        height: 36px;
+        justify-content:center;
+        align-items:center;
+      }
       
       @media (max-width: 767px) {
         :host {
@@ -91,10 +99,10 @@ class HTElementsCartModal extends mixinBehaviors(
       }
       
       .actions > * {
-        text-transform: none;
+        color: #fff;
+        text-transform: uppercase;
         outline: 0;
         text-decoration: none;
-        color: inherit;
         width: calc(50% - 8px);
       }
 
@@ -123,13 +131,16 @@ class HTElementsCartModal extends mixinBehaviors(
         </paper-button>
       </a>
         ${
-          signedIn
-            ? html`<a href="/my-orders">
+          !signedIn
+            ? html`<paper-button raised disabled class="modal-button">Оплата</paper-button>`
+            : html`${
+                orderCreating
+                  ? html`<ht-spinner button></ht-spinner>`
+                  : html`
         <paper-button raised class="modal-button" @click=${_ => {
           this._checkOut();
-        }}>Оплата</paper-button>
-        </a>`
-            : html`<paper-button raised disabled class="modal-button">Оплата</paper-button>`
+        }}>Оплата</paper-button>`
+              }`
         }
     </div>
     <paper-icon-button icon="ht-elements-cart-modal-icons:close" id="closeBtn" aria-label="Закрыть окно" @click=${e => {
@@ -147,7 +158,8 @@ class HTElementsCartModal extends mixinBehaviors(
     return {
       withBackdrop: { type: Boolean },
       opened: { type: Boolean },
-      signedIn: { type: Boolean }
+      signedIn: { type: Boolean },
+      orderCreating: { type: Boolean }
     };
   }
 
@@ -171,6 +183,7 @@ class HTElementsCartModal extends mixinBehaviors(
   }
 
   _renderOpened() {
+    this.orderCreating = false;
     this.requestUpdate();
     this.restoreFocusOnClose = true;
     this.backdropElement.style.display = "none";
@@ -178,6 +191,7 @@ class HTElementsCartModal extends mixinBehaviors(
   }
 
   _renderClosed() {
+    this.orderCreating = false;
     this.classList.remove("opened");
   }
 
@@ -218,13 +232,15 @@ class HTElementsCartModal extends mixinBehaviors(
   notifyResize() {}
 
   _checkOut() {
+    this.orderCreating = true;
+    this.requestUpdate();
     this.dispatchEvent(
       new CustomEvent("create-order", {
         bubbles: true,
         composed: true
       })
     );
-    this.close();
+    // this.close();
   }
 }
 
