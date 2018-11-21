@@ -237,7 +237,10 @@ class HTElementsCartModal extends mixinBehaviors(
     this.dispatchEvent(
       new CustomEvent("create-order", {
         bubbles: true,
-        composed: true
+        composed: true,
+        detail: {
+          ordertypeId: "v2m2Mq3clhUhyeex5Xkp"
+        }
       })
     );
     // this.close();
