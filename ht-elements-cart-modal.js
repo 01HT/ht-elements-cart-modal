@@ -1,5 +1,5 @@
 "use strict";
-import { LitElement, html } from "@polymer/lit-element";
+import { LitElement, html, css } from "lit-element";
 import "@polymer/paper-icon-button";
 import "@polymer/paper-button";
 import "@polymer/iron-iconset-svg";
@@ -11,11 +11,9 @@ class HTElementsCartModal extends mixinBehaviors(
   [IronOverlayBehaviorImpl],
   LitElement
 ) {
-  render() {
-    const { signedIn, orderCreating } = this;
-    return html`
-    ${SharedStyles}
-    <style>
+  static styles = [
+    window.SharedStyles,
+    css`<style>
       :host {
         display: block;
         position: fixed;
@@ -109,7 +107,12 @@ class HTElementsCartModal extends mixinBehaviors(
       paper-icon-button {
         color: var(--primary-text-color);
       }
-    </style>
+    </style>`
+  ];
+
+  render() {
+    const { signedIn, orderCreating } = this;
+    return html`
     <iron-iconset-svg size="24" name="ht-elements-cart-modal-icons">
       <svg>
         <defs>
@@ -123,9 +126,7 @@ class HTElementsCartModal extends mixinBehaviors(
       <div class="label">Добавлено в корзину</div>
     </div>
     <div class="layout-horizontal actions">
-      <a href="/cart" @click=${e => {
-        this.close();
-      }} id="viewCartAnchor">
+      <a href="/cart" @click="${this.close}" id="viewCartAnchor">
         <paper-button raised class="modal-button">
           Корзина
         </paper-button>
@@ -137,21 +138,17 @@ class HTElementsCartModal extends mixinBehaviors(
                 orderCreating
                   ? html`<ht-spinner button></ht-spinner>`
                   : html`
-        <paper-button raised class="modal-button" @click=${_ => {
-          this._checkOut();
-        }}>Оплата</paper-button>`
+        <paper-button raised class="modal-button" @click="${
+          this._checkOut
+        }">Оплата</paper-button>`
               }`
         }
     </div>
-    <paper-icon-button icon="ht-elements-cart-modal-icons:close" id="closeBtn" aria-label="Закрыть окно" @click=${e => {
-      this.close();
-    }}>
+    <paper-icon-button icon="ht-elements-cart-modal-icons:close" id="closeBtn" aria-label="Закрыть окно" @click="${
+      this.close
+    }">
       </paper-icon-button>
 `;
-  }
-
-  static get is() {
-    return "ht-elements-cart-modal";
   }
 
   static get properties() {
