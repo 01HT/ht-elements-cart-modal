@@ -11,104 +11,105 @@ class HTElementsCartModal extends mixinBehaviors(
   [IronOverlayBehaviorImpl],
   LitElement
 ) {
-  static styles = [
-    window.SharedStyles,
-    css`<style>
-      :host {
-        display: block;
-        position: fixed;
-        background-color: #FFF;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        width: 320px;
-        padding: 12px;
-        visibility: hidden;
-        will-change: transform;
-        top: 56px;
-        right: 16px;
-        -webkit-transform: translate3d(calc(100% + 16px), 0, 0);
-        transform: translate3d(calc(100% + 16px), 0, 0);
-        transition-property: visibility, -webkit-transform;
-        transition-property: visibility, transform;
-        transition-duration: 0.2s;
-        transition-delay: 0.1s;
-      }
-      
-      :host(.opened) {
-        visibility: visible;
-        -webkit-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0);
-      }
-      
-      .layout-horizontal {
-        display: flex;
-        flex-direction: row;
-      }
-
-      .actions {
-        padding: 12px 8px;
-        justify-content: space-between;
-      }
-      
-      .label {
-        display: flex;
-        line-height: 24px;
-        margin: 8px;
-      }
-      
-      .modal-button {
-        display: flex;
-      }
-      
-      .modal-button > a {
-        box-sizing: border-box;
-        width: 100%;
-        padding: 8px 24px;
-      }
-      
-      #closeBtn {
-        position: absolute;
-        right: 5px;
-        top: 5px;
-      }
-
-      paper-button[disabled] {
-        background: #ccc;
-        color: #fff;
-        text-transform: uppercase;
-      }
-
-      ht-spinner {
-        display:flex;
-        height: 36px;
-        justify-content:center;
-        align-items:center;
-      }
-      
-      @media (max-width: 767px) {
+  static get styles() {
+    return [
+      css`
         :host {
-          top: auto;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          width: auto;
-          -webkit-transform: translate3d(0, 100%, 0);
-          transform: translate3d(0, 100%, 0);
+          display: block;
+          position: fixed;
+          background-color: #fff;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+          width: 320px;
+          padding: 12px;
+          visibility: hidden;
+          will-change: transform;
+          top: 56px;
+          right: 16px;
+          -webkit-transform: translate3d(calc(100% + 16px), 0, 0);
+          transform: translate3d(calc(100% + 16px), 0, 0);
+          transition-property: visibility, -webkit-transform;
+          transition-property: visibility, transform;
+          transition-duration: 0.2s;
+          transition-delay: 0.1s;
         }
-      }
-      
-      .actions > * {
-        color: #fff;
-        text-transform: uppercase;
-        outline: 0;
-        text-decoration: none;
-        width: calc(50% - 8px);
-      }
 
-      paper-icon-button {
-        color: var(--primary-text-color);
-      }
-    </style>`
-  ];
+        :host(.opened) {
+          visibility: visible;
+          -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+        }
+
+        .layout-horizontal {
+          display: flex;
+          flex-direction: row;
+        }
+
+        .actions {
+          padding: 12px 8px;
+          justify-content: space-between;
+        }
+
+        .label {
+          display: flex;
+          line-height: 24px;
+          margin: 8px;
+        }
+
+        .modal-button {
+          display: flex;
+        }
+
+        .modal-button > a {
+          box-sizing: border-box;
+          width: 100%;
+          padding: 8px 24px;
+        }
+
+        #closeBtn {
+          position: absolute;
+          right: 5px;
+          top: 5px;
+        }
+
+        paper-button[disabled] {
+          background: #ccc;
+          color: #fff;
+          text-transform: uppercase;
+        }
+
+        ht-spinner {
+          display: flex;
+          height: 36px;
+          justify-content: center;
+          align-items: center;
+        }
+
+        @media (max-width: 767px) {
+          :host {
+            top: auto;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: auto;
+            -webkit-transform: translate3d(0, 100%, 0);
+            transform: translate3d(0, 100%, 0);
+          }
+        }
+
+        .actions > * {
+          color: #fff;
+          text-transform: uppercase;
+          outline: 0;
+          text-decoration: none;
+          width: calc(50% - 8px);
+        }
+
+        paper-icon-button {
+          color: var(--primary-text-color);
+        }
+      `
+    ];
+  }
 
   render() {
     const { signedIn, orderCreating } = this;
